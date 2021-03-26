@@ -9,7 +9,7 @@ RSpec.describe Brand, type: :model do
     end
 
     describe '#raw_name' do
-      context 'on create' do
+      describe 'on create' do
         subject(:brand) { build(:brand, attributes) }
 
         let(:attributes) { { name: name } }
@@ -33,7 +33,7 @@ RSpec.describe Brand, type: :model do
         end
       end
 
-      context 'on update' do
+      describe 'on update' do
         subject(:brand) { create(:brand) }
 
         let(:attributes) { { name: name } }
@@ -64,7 +64,7 @@ RSpec.describe Brand, type: :model do
 
   describe 'before validation' do
     describe '#raw_name' do
-      context 'on create' do
+      describe 'on create' do
         subject(:brand) { build(:brand, name: name) }
 
         let(:name) { '    Chá de     Caroção     ' }
@@ -77,7 +77,7 @@ RSpec.describe Brand, type: :model do
         end
       end
 
-      context 'on update' do
+      describe 'on update' do
         subject(:brand) { create(:brand, name: name) }
 
         before { brand.name = new_name }

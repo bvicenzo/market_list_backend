@@ -9,53 +9,130 @@ RSpec.describe Brand, type: :model do
     end
 
     describe '#raw_name' do
-      describe 'on create' do
-        subject(:brand) { build(:brand, attributes) }
+      describe 'presence requirement' do
+        describe 'on create' do
+          subject(:brand) { build(:brand, attributes) }
 
-        let(:attributes) { { name: name } }
+          let(:attributes) { { name: name } }
 
-        before { brand.valid? }
+          before { brand.valid? }
 
-        context 'when name is not sent' do
-          let(:name) { nil }
+          context 'when name is not sent' do
+            let(:name) { nil }
 
-          it 'requires raw_name presence' do
-            expect(brand.errors.details[:raw_name]).to include(error: :blank)
+            it 'requires raw_name presence' do
+              expect(brand.errors.details[:raw_name]).to include(error: :blank)
+            end
+          end
+
+          context 'when name is sent' do
+            let(:name) { 'Paçoquita' }
+
+            it 'requires raw_name presence' do
+              expect(brand.errors.details[:raw_name]).to_not include(error: :blank)
+            end
           end
         end
 
-        context 'when name is sent' do
-          let(:name) { 'Paçoquita' }
+        describe 'on update' do
+          subject(:brand) { create(:brand) }
 
-          it 'requires raw_name presence' do
-            expect(brand.errors.details[:raw_name]).to_not include(error: :blank)
+          let(:attributes) { { name: name } }
+
+          before do
+            brand.attributes = attributes
+            brand.valid?
+          end
+
+          context 'when name is not sent' do
+            let(:name) { nil }
+
+            it 'requires raw_name presence' do
+              expect(brand.errors.details[:raw_name]).to include(error: :blank)
+            end
+          end
+
+          context 'when name is sent' do
+            let(:name) { 'Paçoquita' }
+
+            it 'requires raw_name presence' do
+              expect(brand.errors.details[:raw_name]).to_not include(error: :blank)
+            end
           end
         end
       end
 
-      describe 'on update' do
-        subject(:brand) { create(:brand) }
+      describe 'uniqueness requirement' do
+        describe 'on create' do
+          subject(:brand) { build(:brand, attributes) }
 
-        let(:attributes) { { name: name } }
+          let(:attributes) { { name: name } }
 
-        before do
-          brand.attributes = attributes
-          brand.valid?
-        end
+          before { brand.valid? }
 
-        context 'when name is not sent' do
-          let(:name) { nil }
+          context 'when name is not sent' do
+            let(:name) { nil }
 
-          it 'requires raw_name presence' do
-            expect(brand.errors.details[:raw_name]).to include(error: :blank)
+            it 'does not validates it' do
+              expect(brand.errors.details[:raw_name]).to_not include(error: :taken, value: nil)
+            end
+          end
+
+          context 'when name is sent' do
+            context 'when there is already in other record' do
+              let(:another_brand) { create(:brand) }
+              let(:name) { another_brand.name }
+
+              it 'requires name to be unique' do
+                expect(brand.errors.details[:raw_name]).to include(error: :taken, value: brand.raw_name)
+              end
+            end
+
+            context 'when is a new one' do
+              let(:name) { Faker::Company.name }
+
+              it 'accepts the new name' do
+                expect(brand.errors.details[:raw_name]).to_not include(error: :taken, value: brand.raw_name)
+              end
+            end
           end
         end
 
-        context 'when name is sent' do
-          let(:name) { 'Paçoquita' }
+        describe 'on update' do
+          subject(:brand) { create(:brand) }
 
-          it 'requires raw_name presence' do
-            expect(brand.errors.details[:raw_name]).to_not include(error: :blank)
+          let(:attributes) { { name: name } }
+
+          before do
+            brand.attributes = attributes
+            brand.valid?
+          end
+
+          context 'when name is not sent' do
+            let(:name) { nil }
+
+            it 'does not validates it' do
+              expect(brand.errors.details[:raw_name]).to_not include(error: :taken, value: nil)
+            end
+          end
+
+          context 'when name is sent' do
+            context 'when there is already in other record' do
+              let(:another_brand) { create(:brand) }
+              let(:name) { another_brand.name }
+
+              it 'requires name to be unique' do
+                expect(brand.errors.details[:raw_name]).to include(error: :taken, value: brand.raw_name)
+              end
+            end
+
+            context 'when is a new one' do
+              let(:name) { Faker::Company.name }
+
+              it 'accepts the new name' do
+                expect(brand.errors.details[:raw_name]).to_not include(error: :taken, value: brand.name)
+              end
+            end
           end
         end
       end

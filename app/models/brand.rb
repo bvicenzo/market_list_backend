@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Brand < ApplicationRecord
-  validates :name, :raw_name, presence: true
+  validates :name, presence: true
+  validates :raw_name, presence: true, uniqueness: { allow_blank: true }
 
   before_validation :build_raw_name
 

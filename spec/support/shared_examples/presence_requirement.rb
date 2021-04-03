@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples 'a basic presence requirement for' do |model_name, attribute_name|
+RSpec.shared_examples 'a basic presence requirement for' do |model_name, attribute_name, value_generator|
   describe 'on create' do
     subject(:model) { build(model_name, attributes) }
 
@@ -17,7 +17,7 @@ RSpec.shared_examples 'a basic presence requirement for' do |model_name, attribu
     end
 
     context "when #{attribute_name} is sent" do
-      let(:attribute_value) { anything }
+      let(:attribute_value) { value_generator&.call || anything }
 
       it 'accepts the value' do
         expect(model.errors.details[attribute_name]).to_not include(error: :blank)
@@ -44,7 +44,7 @@ RSpec.shared_examples 'a basic presence requirement for' do |model_name, attribu
     end
 
     context "when #{attribute_name} is changed" do
-      let(:attribute_value) { anything }
+      let(:attribute_value) { value_generator&.call || anything }
 
       it 'includes that change' do
         expect(model.changes).to have_key(attribute_name)

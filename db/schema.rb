@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_31_010203) do
+ActiveRecord::Schema.define(version: 2021_04_03_013300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -40,6 +40,14 @@ ActiveRecord::Schema.define(version: 2021_03_31_010203) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["code"], name: "index_mercosul_common_nomenclatures_on_code", unique: true
+  end
+
+  create_table "specification_code_for_tax_substitutions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "code", null: false
+    t.string "description", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_specification_code_for_tax_substitutions_on_code", unique: true
   end
 
 end

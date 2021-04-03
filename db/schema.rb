@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_03_013300) do
+ActiveRecord::Schema.define(version: 2021_04_03_015240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -31,6 +31,17 @@ ActiveRecord::Schema.define(version: 2021_04_03_013300) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["code"], name: "index_global_product_classifications_on_code", unique: true
+  end
+
+  create_table "global_trade_item_numbers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "number", null: false
+    t.string "type_packaging", null: false
+    t.integer "quantity_packaging", null: false
+    t.integer "ballast"
+    t.integer "layer"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["number"], name: "index_global_trade_item_numbers_on_number", unique: true
   end
 
   create_table "mercosul_common_nomenclatures", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Brand < ApplicationRecord
+  has_many :products, inverse_of: :brand, dependent: :destroy
+
   validates :name, presence: true
   validates :raw_name, presence: true, uniqueness: { allow_blank: true }
 

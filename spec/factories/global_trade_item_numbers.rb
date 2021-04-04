@@ -7,5 +7,6 @@ FactoryBot.define do
     quantity_packaging { Faker::Number.positive.to_i }
     ballast { Faker::Number.positive.to_i }
     layer { Faker::Number.positive.to_i }
+    product { build(:product) }
   end
 end

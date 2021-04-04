@@ -47,7 +47,9 @@ RSpec.shared_examples 'a basic presence requirement for' do |model_name, attribu
       let(:attribute_value) { value_generator&.call || anything }
 
       it 'includes that change' do
-        expect(model.changes).to have_key(attribute_name)
+        attribute_or_association = [attribute_name.to_s, "#{attribute_name}_id"]
+        attribute_changed = model.changes.keys.any? { |attribute| attribute_or_association.include?(attribute) }
+        expect(attribute_changed).to be_truthy
       end
 
       it 'accepts the value' do

@@ -63,10 +63,6 @@ RSpec.describe Product, type: :model do
       end
     end
 
-    describe '#brand' do
-      it_behaves_like 'a basic presence requirement for', :product, :brand, -> { FactoryBot.build(:brand) }
-    end
-
     describe '#global_product_classification' do
       it_behaves_like(
         'a basic presence requirement for',

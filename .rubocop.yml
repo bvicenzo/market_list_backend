@@ -18,6 +18,9 @@ Metrics/MethodLength:
   Exclude:
     - 'db/migrate/*'
 
+Naming/RescuedExceptionsVariableName:
+  PreferredName: error
+
 Rails/FilePath:
   Enabled: false
 

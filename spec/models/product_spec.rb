@@ -62,23 +62,5 @@ RSpec.describe Product, type: :model do
         end
       end
     end
-
-    describe '#global_product_classification' do
-      it_behaves_like(
-        'a basic presence requirement for',
-        :product,
-        :global_product_classification,
-        -> { FactoryBot.build(:global_product_classification) }
-      )
-    end
-
-    describe '#mercosul_common_nomenclature' do
-      it_behaves_like(
-        'a basic presence requirement for',
-        :product,
-        :mercosul_common_nomenclature,
-        -> { FactoryBot.build(:mercosul_common_nomenclature) }
-      )
-    end
   end
 end

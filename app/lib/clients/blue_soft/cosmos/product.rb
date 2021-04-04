@@ -3,6 +3,8 @@
 module Clients
   module BlueSoft
     module Cosmos
+      # Implements a bluesoft product fetching by following their API docs:
+      # https://cosmos.bluesoft.com.br/api
       class Product
         PATH = '/gtins/%<code>s.json'
 

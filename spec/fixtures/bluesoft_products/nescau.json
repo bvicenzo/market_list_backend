@@ -1,0 +1,42 @@
+{
+  "description": "NESCAU 2.0 LATA",
+  "gtin": 7891000061190,
+  "thumbnail": "https://cdn-cosmos.bluesoft.com.br/products/nescau-2-0-lata-200-g_600x600-PU686c8_1.jpg",
+  "width": null,
+  "height": null,
+  "length": null,
+  "net_weight": null,
+  "gross_weight": null,
+  "created_at": "2014-04-24T11:07:34.000-03:00",
+  "updated_at": "2021-03-16T10:54:05.000-03:00",
+  "price": "R$ 2,89 a R$ 5,69",
+  "avg_price": 4.29,
+  "max_price": 5.69,
+  "min_price": 2.89,
+  "gtins": [
+    {
+      "gtin": 7891000061190,
+      "commercial_unit": {
+        "type_packaging": "Unidade",
+        "quantity_packaging": 1,
+        "ballast": null,
+        "layer": null
+      }
+    }
+  ],
+  "origin": "COSMOS",
+  "barcode_image": "https://api.cosmos.bluesoft.com.br/products/barcode/8C86D6ABFCFEA86D3D6A98B7A961E419.png",
+  "brand": {
+    "name": "NESTLE",
+    "picture": "https://cdn-cosmos.bluesoft.com.br/brands/brand_nestle"
+  },
+  "gpc": {
+    "code": "50000000",
+    "description": "Alimentos / Bebidas / Tabaco"
+  },
+  "ncm": {
+    "code": "18069000",
+    "description": "Outros",
+    "full_description": "Cacau e suas preparações - Chocolate e outras preparações alimentícias que contenham cacau. - Outros"
+  }
+}

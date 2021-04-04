@@ -1,0 +1,47 @@
+{
+  "description": "CHÁ PRETO LARANJA E MEL LEÃO REANIMA CAIXA 20G 10 UNIDADES",
+  "gtin": 7891098041692,
+  "thumbnail": "https://cdn-cosmos.bluesoft.com.br/products/7891098041692",
+  "width": null,
+  "height": null,
+  "length": null,
+  "net_weight": null,
+  "gross_weight": null,
+  "created_at": "2020-02-26T13:00:56.000-03:00",
+  "updated_at": "2021-03-17T17:48:35.000-03:00",
+  "price": "R$ 7,63 a R$ 11,29",
+  "avg_price": 9.459999999999999,
+  "max_price": 11.29,
+  "min_price": 7.63,
+  "gtins": [
+    {
+      "gtin": 7891098041692,
+      "commercial_unit": {
+        "type_packaging": "Unidade",
+        "quantity_packaging": 1,
+        "ballast": null,
+        "layer": null
+      }
+    },
+    {
+      "gtin": 17891098041699,
+      "commercial_unit": {
+        "type_packaging": "Caixa",
+        "quantity_packaging": 10,
+        "ballast": 5,
+        "layer": 26
+      }
+    }
+  ],
+  "origin": "COSMOS",
+  "barcode_image": "https://api.cosmos.bluesoft.com.br/products/barcode/569CFF68E7AE61F78D076603BC1368E6.png",
+  "brand": {
+    "name": "LEAO",
+    "picture": "/assets/brand-placeholder-7080174fbd24025783105a607811edad.png"
+  },
+  "ncm": {
+    "code": "21012010",
+    "description": "De chá",
+    "full_description": "Preparações alimentícias diversas - Extratos, essências e concentrados de café, de chá ou de mate e preparações à base destes produtos ou à base de café, chá ou mate; chicória torrada e outros sucedâneos torrados do café e respectivos extratos, essências e concentrados - Extratos, essências e concentrados de chá ou de mate e preparações à base destes extratos, essências ou concentrados ou à base de chá ou de mate - De chá"
+  }
+}

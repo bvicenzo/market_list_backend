@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Product < ApplicationRecord
+  attribute :raw_name, :raw_string
+
   has_many :global_trade_item_numbers, inverse_of: :product, dependent: :destroy
 
   belongs_to :brand, inverse_of: :products
@@ -10,11 +12,11 @@ class Product < ApplicationRecord
 
   validates :name, :raw_name, presence: true
 
-  before_validation :build_raw_name
+  before_validation :fill_raw_name
 
   private
 
-  def build_raw_name
-    self.raw_name = I18n.transliterate(name.to_s).downcase.squish.presence if new_record? || name_changed?
+  def fill_raw_name
+    self.raw_name = name
   end
 end

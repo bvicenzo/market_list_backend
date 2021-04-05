@@ -39,21 +39,59 @@ module Clients
         end
 
         def failure_message_for(response)
-          error_family = if response.status.between?(500, 599)
-                           :server_error
-                         elsif response.status.between?(400, 499)
-                           :client_error
-                         end
-
-          { success: false, error: { code: error_family, message: parsed_body_for(response.body) } }
+          {
+            success: false,
+            error: {
+              code: code_for(response.status),
+              kind: response_kind_for(response.status),
+              message: parsed_body_for(response.body)
+            }
+          }
         end
 
         def exception_response_for(error)
-          { success: false, error: { code: :network_error, message: error.message } }
+          { success: false, error: { code: :network_error, kind: :connection_failed, message: error.message } }
         end
 
         def parsed_body_for(body)
           JSON.parse(body, symbolize_names: true)
+        end
+
+        # Private
+        # Generates a HTTParty response message from a Net::HTTPRespoonse Class
+        # Examples:
+        #
+        # response_type(Net::HTTPOK)
+        # # => "OK"
+        #
+        # response_type(Net::HTTPUnprocessableEntity)
+        # # => "Unprocessable Entity"
+        def code_for(response_status)
+          response_class_for(response_status)
+            .to_s
+            .delete_prefix('Net::HTTP')
+            .gsub(/([A-Z]+)([A-Z][a-z])/, '\1 \2')
+            .gsub(/([a-z])([A-Z])/, '\1 \2')
+            .remove(' ')
+            .underscore
+            .to_sym
+        end
+
+        # Private
+        # Get an HTTP status error name for a status code
+        #
+        # Ex: 400
+        # # => "Net:HTTPBadRequest"
+        def response_class_for(response_status)
+          Net::HTTPResponse::CODE_TO_OBJ[response_status.to_s].to_s
+        end
+
+        def response_kind_for(response_status)
+          if response_status.between?(500, 599)
+            :server_error
+          elsif response_status.between?(400, 499)
+            :client_error
+          end
         end
       end
     end

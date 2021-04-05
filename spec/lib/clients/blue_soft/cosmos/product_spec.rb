@@ -15,6 +15,7 @@ RSpec.describe Clients::BlueSoft::Cosmos::Product, type: :client do
             success: false,
             error: {
               code: :network_error,
+              kind: :connection_failed,
               message: 'execution expired'
             }
           }
@@ -32,7 +33,8 @@ RSpec.describe Clients::BlueSoft::Cosmos::Product, type: :client do
               {
                 success: false,
                 error: {
-                  code: :server_error,
+                  code: :bad_gateway,
+                  kind: :server_error,
                   message: {}
                 }
               }
@@ -44,8 +46,8 @@ RSpec.describe Clients::BlueSoft::Cosmos::Product, type: :client do
           before do
             stub_get(
               to: 'https://api.cosmos.bluesoft.com.br/gtins/123456.json',
-              response_status: 404,
-              response_body: { message: 'O recurso solicitado não existe' }
+              response_status: 429,
+              response_body: { message: 'too many requests' }
             )
           end
 
@@ -54,8 +56,9 @@ RSpec.describe Clients::BlueSoft::Cosmos::Product, type: :client do
               {
                 success: false,
                 error: {
-                  code: :client_error,
-                  message: { message: 'O recurso solicitado não existe' }
+                  code: :too_many_requests,
+                  kind: :client_error,
+                  message: { message: 'too many requests' }
                 }
               }
             )

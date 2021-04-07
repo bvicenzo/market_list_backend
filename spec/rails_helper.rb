@@ -67,4 +67,7 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # Travel Helpers
+  config.include ActiveSupport::Testing::TimeHelpers
 end

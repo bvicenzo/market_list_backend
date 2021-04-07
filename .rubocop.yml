@@ -5,6 +5,9 @@ require:
 AllCops:
   NewCops: enable
 
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
 Metrics/AbcSize:
   Exclude:
     - 'db/migrate/*'

@@ -19,5 +19,6 @@ FactoryBot.define do
     global_product_classification { build(:global_product_classification) }
     mercosul_common_nomenclature { build(:mercosul_common_nomenclature) }
     specification_code_for_tax_substitution { build(:specification_code_for_tax_substitution) }
+    global_trade_item_numbers { build_list(:global_trade_item_numbers, 1) }
   end
 end

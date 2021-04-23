@@ -35,6 +35,10 @@
   ],
   "origin": "COSMOS",
   "barcode_image": "https://api.cosmos.bluesoft.com.br/products/barcode/D215D0FAC1ACAEF6B65EE7ED9820DD38.png",
+  "brand": {
+    "name": "UNIÃO",
+    "picture": "https://cdn-cosmos.bluesoft.com.br/brands/brand_uniao"
+  },
   "gpc": {
     "code": "10000043",
     "description": "Açúcar / Substitutos do Açúcar (Não perecível)"

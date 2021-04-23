@@ -8,5 +8,9 @@ FactoryBot.define do
     ballast { Faker::Number.positive.to_i }
     layer { Faker::Number.positive.to_i }
     product { build(:product) }
+
+    trait :without_product do
+      product { nil }
+    end
   end
 end

@@ -15,7 +15,7 @@ class ProductImporterService
     product_data = response[:product_data]
     product = product_for(product_data)
 
-    imported_product = product.nil? ? create_product_for(product_data) : update_product_for(product_data)
+    imported_product = product.nil? ? create_product_for(product_data) : update_product_for(product, product_data)
 
     if imported_product.errors.blank?
       { success: true, product: imported_product }
@@ -54,13 +54,34 @@ class ProductImporterService
   def create_product_for(product_data)
     product = initialize_product_for(product_data)
     assing_global_trade_numbers_for(product, product_data[:gtins])
+    product.brand = build_brand_for(product_data.fetch(:brand, nil))
+    product.global_product_classification = build_global_product_classification_for(product_data.fetch(:gpc, nil))
+    product.mercosul_common_nomenclature = build_mercosul_common_nomenclature_for(product_data.fetch(:ncm, nil))
+    product.specification_code_for_tax_substitution = build_specification_code_for_tax_substitution_for(
+      product_data.fetch(:cest, nil)
+    )
 
     product.save
 
     product
   end
 
-  def update_product_for(_product_data); end
+  def update_product_for(product, product_data)
+    product.attributes = {
+      name: product_data[:description],
+      thumbnail: product_data[:thumbnail],
+      price: product_data[:price],
+      avg_price: product_data[:avg_price],
+      max_price: product_data[:max_price],
+      min_price: product_data[:min_price],
+      origin: product_data[:origin],
+      barcode_image: product_data[:barcode_image]
+    }
+
+    product.save
+
+    product
+  end
 
   def initialize_product_for(product_data)
     Product.new(
@@ -86,5 +107,52 @@ class ProductImporterService
         layer: commercial_unity_data[:layer]
       )
     end
+  end
+
+  def build_brand_for(brand_data)
+    return nil unless brand_data
+
+    brand = Brand.find_or_initialize_by(raw_name: brand_data[:name])
+    brand.name = brand_data[:name]
+    brand.picture_url = brand_data[:picture]
+
+    brand
+  end
+
+  def build_global_product_classification_for(global_product_classification_data)
+    return nil unless global_product_classification_data
+
+    global_product_classification = GlobalProductClassification
+      .find_or_initialize_by(code: global_product_classification_data[:code])
+
+    received_description = global_product_classification_data[:description]
+    global_product_classification.description = received_description if received_description.present?
+
+    global_product_classification
+  end
+
+  def build_mercosul_common_nomenclature_for(mercosul_common_nomenclature_data)
+    return nil unless mercosul_common_nomenclature_data
+
+    mercosul_common_nomenclature = MercosulCommonNomenclature
+      .find_or_initialize_by(code: mercosul_common_nomenclature_data[:code])
+
+    received_description = mercosul_common_nomenclature_data[:description]
+    mercosul_common_nomenclature.description = received_description if received_description.present?
+    mercosul_common_nomenclature.full_description = mercosul_common_nomenclature_data[:full_description]
+
+    mercosul_common_nomenclature
+  end
+
+  def build_specification_code_for_tax_substitution_for(specification_code_for_tax_substitution_data)
+    return nil unless specification_code_for_tax_substitution_data
+
+    specification_code_for_tax_substitution = SpecificationCodeForTaxSubstitution
+      .find_or_initialize_by(code: specification_code_for_tax_substitution_data[:code])
+
+    received_description = specification_code_for_tax_substitution_data[:description]
+    specification_code_for_tax_substitution.description = received_description if received_description.present?
+
+    specification_code_for_tax_substitution
   end
 end
